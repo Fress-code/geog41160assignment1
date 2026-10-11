@@ -71,7 +71,7 @@ def group_files_by_month(file_list):
 print(month_from_doy(2025, 32))
 monthly_files = group_files_by_month(ndvi_files)
 
-def monthly_mean(filepaths):
+def monthly_mean(filepaths,scale_factor=0.0001):
     arrays =[]
 
     for filepath in filepaths:
@@ -83,7 +83,7 @@ def monthly_mean(filepaths):
             if nodata is not None:
                 data[data == nodata] = np.nan
 
-            data = data * 0.0001
+            data = data * scale_factor
             arrays.append(data)
     mean_array = np.nanmean(arrays,axis=0)
     profile.update(dtype=rasterio.float32, nodata=np.nan)
